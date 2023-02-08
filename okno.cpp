@@ -24,9 +24,7 @@ void configurePainterForLines(QPainter &painter) {
   painter.setPen(pen);
 }
 
-bool checkCollision(const QPoint &point1, const QPoint &point2, const int minimumDistance) {
-  return (point1 - point2).manhattanLength() <= minimumDistance;
-}
+bool checkCollision(const QPoint &point1, const QPoint &point2, const int minimumDistance) { return (point1 - point2).manhattanLength() <= minimumDistance; }
 
 } // namespace
 
@@ -54,12 +52,10 @@ void Okno::refreshPointsCountText() { ui->points_count_label->setText(QString::n
 
 void Okno::generatePoints() // TODO: Add resizing
 {
-  while(points.size() < startPointsCount)
-  {
+  while (points.size() < startPointsCount) {
     QPoint candidatePoint{QRandomGenerator::global()->bounded(30, 770), QRandomGenerator::global()->bounded(60, 530)};
 
-    if(auto found = findCollision(candidatePoint, generatorCollisionDistance); found == points.end())
-    {
+    if (auto found = findCollision(candidatePoint, generatorCollisionDistance); found == points.end()) {
       points.push_back(candidatePoint);
     }
   }
