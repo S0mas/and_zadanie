@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+#include "interactivepointstable.h"
+
 #include <QLine>
 #include <QPainter>
 #include <QPen>
@@ -34,7 +36,7 @@ bool checkCollision(const QPoint &point1, const QPoint &point2, const int minimu
 
 } // namespace
 
-MainWindow::MainWindow(QWidget *parent) : QWidget(parent), ui(new Ui::MainWindow) {
+MainWindow::MainWindow(QWidget *parent) : QWidget(parent), ui(new Ui::MainWindow), interactivePointsTable(new InteractivePointsTable(this)) {
   ui->setupUi(this);
   generatePoints();
   ui->displayFrame->setWindowOpacity(0.2);

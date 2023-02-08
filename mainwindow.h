@@ -6,6 +6,8 @@
 class QMouseEvent;
 class QPaintEvent;
 class QPainter;
+class InteractivePointsTable;
+
 namespace Ui { class MainWindow; }
 
 class MainWindow : public QWidget
@@ -36,4 +38,5 @@ private:
 private:
     Ui::MainWindow *ui;
     std::vector<QPoint> points;
+    InteractivePointsTable* interactivePointsTable;
 };
