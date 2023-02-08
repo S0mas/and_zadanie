@@ -46,10 +46,8 @@ void Okno::on_clearButton_clicked() {
 void Okno::on_closeButton_clicked() { QApplication::exit(); }
 
 void Okno::on_generateButton_clicked() {
-  if (points.size() < startPointsCount) {
-    generatePoints();
-    update();
-  }
+  generatePoints();
+  update();
 }
 
 void Okno::refreshPointsCountText() { ui->points_count_label->setText(QString::number(points.size(), 10)); }
