@@ -3,9 +3,15 @@
 
 namespace {
 
+constexpr int pointRadius = 8;
+constexpr int penWidth = 2;
+constexpr int clickCollisionDistance = 160;
+constexpr int generatorCollisionDistance = 300;
+constexpr int startPointsCount = 20;
+
 void configurePainterForPoints(QPainter &painter) {
   QPen pen(Qt::white);
-  pen.setWidth(2);
+  pen.setWidth(penWidth);
   painter.setPen(pen);
 
   QBrush brush(Qt::lightGray);
@@ -14,7 +20,7 @@ void configurePainterForPoints(QPainter &painter) {
 
 void configurePainterForLines(QPainter &painter) {
   QPen pen(Qt::green);
-  pen.setWidth(2);
+  pen.setWidth(penWidth);
   painter.setPen(pen);
 }
 
@@ -54,7 +60,7 @@ void Okno::generatePoints() // TODO: Add resizing
   {
     QPoint candidatePoint{QRandomGenerator::global()->bounded(30, 770), QRandomGenerator::global()->bounded(60, 530)};
 
-    if(auto found = findCollision(candidatePoint, 300); found == points.end())
+    if(auto found = findCollision(candidatePoint, generatorCollisionDistance); found == points.end())
     {
       points.push_back(candidatePoint);
     }
@@ -65,7 +71,7 @@ void Okno::clearPoints() { points.clear(); }
 
 void Okno::mousePressEvent(QMouseEvent *event) {
   const auto &mouseClickPoint = event->pos();
-  if (auto found = findCollision(mouseClickPoint, 160); found != points.end()) {
+  if (auto found = findCollision(mouseClickPoint, clickCollisionDistance); found != points.end()) {
     points.erase(found);
   } else {
     points.push_back(mouseClickPoint);
@@ -88,7 +94,7 @@ std::vector<QPoint>::const_iterator Okno::findCollision(const QPoint &point1, co
 void Okno::drawPoints(QPainter &painter) const {
   configurePainterForPoints(painter);
   for (const auto &point : points) {
-    painter.drawEllipse(point, 8, 8);
+    painter.drawEllipse(point, pointRadius, pointRadius);
   }
 }
 
