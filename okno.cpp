@@ -81,20 +81,11 @@ void Okno::clearPoints() { points.clear(); }
 
 void Okno::mousePressEvent(QMouseEvent *event) {
   QPoint mousePoint{event->pos()};
-  bool mouseCollision{false};
-  std::vector<QPoint>::iterator itToDelete;
-
-  for (std::vector<QPoint>::iterator it = points.begin(); it != points.end(); ++it) {
-    int distance = 160;
-    if (checkCollision(mousePoint, *it, distance)) {
-      mouseCollision = true;
-      itToDelete = it;
-    }
-  }
-  if (!mouseCollision)
+  if (auto found = findCollision(mousePoint, 160); found != points.end()) {
+    points.erase(found);
+  } else {
     points.push_back(mousePoint);
-  else
-    points.erase(itToDelete);
+  }
 
   update();
   refreshPointsCountText();
@@ -104,6 +95,11 @@ void Okno::paintEvent(QPaintEvent *e) {
   QPainter painter(this);
   drawLines(painter);
   drawPoints(painter);
+}
+
+std::vector<QPoint>::const_iterator Okno::findCollision(const QPoint& point1, const int distance) const
+{
+  return std::find_if(points.begin(), points.end(), [point1, distance](auto const& point2) { return checkCollision(point1, point2, distance); });
 }
 
 void Okno::drawPoints(QPainter &painter) const {
