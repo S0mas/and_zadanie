@@ -43,8 +43,6 @@ private:
     Ui::Okno *ui;
     size_t startPointsCount{20};
     std::vector<QPoint> points;
-    bool vecCleared {false};
-
 };
 
 

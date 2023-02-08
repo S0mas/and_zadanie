@@ -34,16 +34,14 @@ Okno::~Okno() { delete ui; }
 
 void Okno::on_clearButton_clicked() {
   clearPoints();
-  vecCleared = true;
   update();
 }
 
 void Okno::on_closeButton_clicked() { QApplication::exit(); }
 
 void Okno::on_generateButton_clicked() {
-  if (vecCleared || points.size() < startPointsCount) {
+  if (points.size() < startPointsCount) {
     generatePoints();
-    vecCleared = false;
     update();
   }
 }
