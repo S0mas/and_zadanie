@@ -1,6 +1,27 @@
 #include "okno.h"
 #include "./ui_okno.h"
 
+namespace {
+
+void configurePainterForPoints(QPainter& painter)
+{
+    QPen pen(Qt::white);
+    pen.setWidth(2);
+    painter.setPen(pen);
+
+    QBrush brush(Qt::lightGray);
+    painter.setBrush(brush);
+}
+
+void configurePainterForLines(QPainter& painter)
+{
+  QPen pen(Qt::green);
+  pen.setWidth(2);
+  painter.setPen(pen);
+}
+
+}
+
 Okno::Okno(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Okno)
@@ -113,11 +134,7 @@ void Okno::paintEvent(QPaintEvent *e)
 
 void Okno::drawPoints(QPainter& painter) const
 {
-    QPen point_pen(Qt::white);
-    point_pen.setWidth(2);
-    painter.setPen(point_pen);
-    QBrush brush(Qt::lightGray);
-    painter.setBrush(brush);
+    configurePainterForPoints(painter);
 
     for_each (points.begin(), points.end(),
               [&](QPoint point){painter.drawEllipse(point, 8, 8);});
@@ -127,9 +144,7 @@ void Okno::drawLines(QPainter& painter) const
 {
     if (points.size() > 1)
     {
-        QPen line_pen(Qt::green);
-        line_pen.setWidth(2);
-        painter.setPen(line_pen);
+        configurePainterForLines(painter);
         for (std::vector<QPoint>::const_iterator it = points.begin() ; it != points.end()-1; ++it)
         {
             painter.drawLine(*it, *(it+1));
