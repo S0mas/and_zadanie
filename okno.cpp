@@ -18,8 +18,7 @@ void configurePainterForLines(QPainter &painter) {
   painter.setPen(pen);
 }
 
-bool checkCollision(const QPoint& point1, const QPoint& point2, const int minimumDistance)
-{
+bool checkCollision(const QPoint &point1, const QPoint &point2, const int minimumDistance) {
   return (pow(point1.x() - point2.x(), 2) < minimumDistance) && (pow(point1.y() - point2.y(), 2) < minimumDistance);
 }
 
@@ -97,15 +96,13 @@ void Okno::paintEvent(QPaintEvent *e) {
   drawPoints(painter);
 }
 
-std::vector<QPoint>::const_iterator Okno::findCollision(const QPoint& point1, const int distance) const
-{
-  return std::find_if(points.begin(), points.end(), [point1, distance](auto const& point2) { return checkCollision(point1, point2, distance); });
+std::vector<QPoint>::const_iterator Okno::findCollision(const QPoint &point1, const int distance) const {
+  return std::find_if(points.begin(), points.end(), [point1, distance](auto const &point2) { return checkCollision(point1, point2, distance); });
 }
 
 void Okno::drawPoints(QPainter &painter) const {
   configurePainterForPoints(painter);
-  for(const auto& point : points)
-  {
+  for (const auto &point : points) {
     painter.drawEllipse(point, 8, 8);
   }
 }
