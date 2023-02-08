@@ -26,7 +26,6 @@ bool checkCollision(const QPoint &point1, const QPoint &point2, const int minimu
 
 Okno::Okno(QWidget *parent) : QWidget(parent), ui(new Ui::Okno) {
   ui->setupUi(this);
-  refreshPointsCountText();
   generatePoints();
   ui->displayFrame->setWindowOpacity(0.2);
 }
@@ -35,7 +34,6 @@ Okno::~Okno() { delete ui; }
 
 void Okno::on_clearButton_clicked() {
   clearPoints();
-  refreshPointsCountText();
   vecCleared = true;
   update();
 }
@@ -45,7 +43,6 @@ void Okno::on_closeButton_clicked() { QApplication::exit(); }
 void Okno::on_generateButton_clicked() {
   if (vecCleared || points.size() < startPointsCount) {
     generatePoints();
-    refreshPointsCountText();
     vecCleared = false;
     update();
   }
@@ -73,7 +70,6 @@ void Okno::generatePoints() // TODO: Add resizing
         points.push_back(QPoint(x, y));
     }
   }
-  refreshPointsCountText();
 }
 
 void Okno::clearPoints() { points.clear(); }
@@ -87,13 +83,13 @@ void Okno::mousePressEvent(QMouseEvent *event) {
   }
 
   update();
-  refreshPointsCountText();
 }
 
 void Okno::paintEvent(QPaintEvent *e) {
   QPainter painter(this);
   drawLines(painter);
   drawPoints(painter);
+  refreshPointsCountText();
 }
 
 std::vector<QPoint>::const_iterator Okno::findCollision(const QPoint &point1, const int distance) const {
