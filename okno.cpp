@@ -52,22 +52,13 @@ void Okno::refreshPointsCountText() { ui->points_count_label->setText(QString::n
 
 void Okno::generatePoints() // TODO: Add resizing
 {
-  while (points.size() < startPointsCount) {
-    if (points.size() == 0) {
-      int x = QRandomGenerator::global()->bounded(30, 770);
-      int y = QRandomGenerator::global()->bounded(50, 530);
-      points.push_back(QPoint(x, y));
-    } else {
-      int x = QRandomGenerator::global()->bounded(30, 770);
-      int y = QRandomGenerator::global()->bounded(60, 530);
-      bool collision{false};
-      for (auto &p : points) {
-        if ((pow(p.x() - x, 2) < 300) && (pow(p.y() - y, 2) < 300)) {
-          collision = true;
-        }
-      }
-      if (!collision)
-        points.push_back(QPoint(x, y));
+  while(points.size() < startPointsCount)
+  {
+    QPoint candidatePoint{QRandomGenerator::global()->bounded(30, 770), QRandomGenerator::global()->bounded(60, 530)};
+
+    if(auto found = findCollision(candidatePoint, 300); found == points.end())
+    {
+      points.push_back(candidatePoint);
     }
   }
 }
