@@ -1,5 +1,5 @@
-#include "okno.h"
-#include "./ui_okno.h"
+#include "mainwindow.h"
+#include "./ui_mainwindow.h"
 
 #include <QLine>
 #include <QPainter>
@@ -34,27 +34,27 @@ bool checkCollision(const QPoint &point1, const QPoint &point2, const int minimu
 
 } // namespace
 
-Okno::Okno(QWidget *parent) : QWidget(parent), ui(new Ui::Okno) {
+MainWindow::MainWindow(QWidget *parent) : QWidget(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
   generatePoints();
   ui->displayFrame->setWindowOpacity(0.2);
 }
 
-Okno::~Okno() { delete ui; }
+MainWindow::~MainWindow() { delete ui; }
 
-void Okno::on_clearButton_clicked() {
+void MainWindow::on_clearButton_clicked() {
   clearPoints();
   update();
 }
 
-void Okno::on_closeButton_clicked() { QApplication::exit(); }
+void MainWindow::on_closeButton_clicked() { QApplication::exit(); }
 
-void Okno::on_generateButton_clicked() {
+void MainWindow::on_generateButton_clicked() {
   generatePoints();
   update();
 }
 
-void Okno::mousePressEvent(QMouseEvent *event) {
+void MainWindow::mousePressEvent(QMouseEvent *event) {
   const auto &mouseClickPoint = event->pos();
   if (auto found = findCollision(mouseClickPoint, clickCollisionDistance); found != points.end()) {
     points.erase(found);
@@ -65,16 +65,16 @@ void Okno::mousePressEvent(QMouseEvent *event) {
   update();
 }
 
-void Okno::paintEvent(QPaintEvent *e) {
+void MainWindow::paintEvent(QPaintEvent *e) {
   QPainter painter(this);
   drawLines(painter);
   drawPoints(painter);
   refreshPointsCountText();
 }
 
-void Okno::refreshPointsCountText() { ui->points_count_label->setText(QString::number(points.size(), 10)); }
+void MainWindow::refreshPointsCountText() { ui->pointsCountLabel->setText(QString::number(points.size(), 10)); }
 
-void Okno::generatePoints() // TODO: Add resizing
+void MainWindow::generatePoints() // TODO: Add resizing
 {
   while (points.size() < startPointsCount) {
     QPoint candidatePoint{QRandomGenerator::global()->bounded(30, 770), QRandomGenerator::global()->bounded(60, 530)};
@@ -85,20 +85,20 @@ void Okno::generatePoints() // TODO: Add resizing
   }
 }
 
-void Okno::clearPoints() { points.clear(); }
+void MainWindow::clearPoints() { points.clear(); }
 
-std::vector<QPoint>::const_iterator Okno::findCollision(const QPoint &point1, const int distance) const {
+std::vector<QPoint>::const_iterator MainWindow::findCollision(const QPoint &point1, const int distance) const {
   return std::find_if(points.begin(), points.end(), [point1, distance](auto const &point2) { return checkCollision(point1, point2, distance); });
 }
 
-void Okno::drawPoints(QPainter &painter) const {
+void MainWindow::drawPoints(QPainter &painter) const {
   configurePainterForPoints(painter);
   for (const auto &point : points) {
     painter.drawEllipse(point, pointRadius, pointRadius);
   }
 }
 
-void Okno::drawLines(QPainter &painter) const {
+void MainWindow::drawLines(QPainter &painter) const {
   if (points.size() > 1) {
     configurePainterForLines(painter);
     for (auto it = points.begin(); it != points.end() - 1; ++it) {

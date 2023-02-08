@@ -6,15 +6,15 @@
 class QMouseEvent;
 class QPaintEvent;
 class QPainter;
-namespace Ui { class Okno; }
+namespace Ui { class MainWindow; }
 
-class Okno : public QWidget
+class MainWindow : public QWidget
 {
     Q_OBJECT
 
 public:
-    Okno(QWidget *parent = nullptr);
-    ~Okno();
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
 
 private slots:
     void on_clearButton_clicked();
@@ -34,6 +34,6 @@ private:
     void drawLines(QPainter& painter) const;
 
 private:
-    Ui::Okno *ui;
+    Ui::MainWindow *ui;
     std::vector<QPoint> points;
 };

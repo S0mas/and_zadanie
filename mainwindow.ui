@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Okno</class>
- <widget class="QWidget" name="Okno">
+ <class>MainWindow</class>
+ <widget class="QWidget" name="MainWindow">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -200,7 +200,7 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>5</x>
@@ -223,7 +223,7 @@
      <number>5</number>
     </property>
     <item>
-     <layout class="QHBoxLayout" name="top_bar_layout" stretch="1,6">
+     <layout class="QHBoxLayout" name="topBarLayout" stretch="1,6">
       <property name="spacing">
        <number>10</number>
       </property>
@@ -252,7 +252,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="points_count_label">
+       <widget class="QLabel" name="pointsCountLabel">
         <property name="font">
          <font>
           <pointsize>14</pointsize>
@@ -344,7 +344,7 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="foot_layout" stretch="0,6,1">
+     <layout class="QHBoxLayout" name="footLayout" stretch="0,6,1">
       <property name="spacing">
        <number>10</number>
       </property>
@@ -407,15 +407,6 @@
         <property name="palette">
          <palette>
           <active>
-           <colorrole role="Light">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
            <colorrole role="Base">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
@@ -427,15 +418,6 @@
            </colorrole>
           </active>
           <inactive>
-           <colorrole role="Light">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
            <colorrole role="Base">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
@@ -447,15 +429,6 @@
            </colorrole>
           </inactive>
           <disabled>
-           <colorrole role="Light">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
            <colorrole role="Base">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
