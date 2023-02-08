@@ -31,8 +31,6 @@ private slots:
     void generatePoints();
     void clearPoints();
 
-    size_t PointsVectorSize() const;
-
 protected:
     void paintEvent(QPaintEvent *event);
     void drawPoints(QPainter& painter) const;

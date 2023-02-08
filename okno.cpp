@@ -32,7 +32,7 @@ void Okno::on_closeButton_clicked()
 
 void Okno::on_generateButton_clicked()
 {
-    if(vecCleared || PointsVectorSize() < startPointsCount)
+    if(vecCleared || points.size() < startPointsCount)
     {
     generatePoints();
     refreshPointsCountText();
@@ -44,14 +44,14 @@ void Okno::on_generateButton_clicked()
 //Points-----------------------------------------
 void Okno::refreshPointsCountText()
 {
-   ui->points_count_label->setText(QString::number(PointsVectorSize(),10));
+   ui->points_count_label->setText(QString::number(points.size(),10));
 }
 
 void Okno::generatePoints() // dodac resizing
 {
-    while (PointsVectorSize() < startPointsCount)
+    while (points.size() < startPointsCount)
     {
-        if (PointsVectorSize() == 0)
+        if (points.size() == 0)
         {
             int x = QRandomGenerator::global()->bounded(30,770);
             int y = QRandomGenerator::global()->bounded(50,530);
@@ -78,11 +78,6 @@ void Okno::generatePoints() // dodac resizing
 void Okno::clearPoints()
 {
     points.clear();
-}
-
-size_t Okno::PointsVectorSize() const
-{
-    return points.size();
 }
 
 //Mouse draw and delete-------------------------------------
@@ -130,7 +125,7 @@ void Okno::drawPoints(QPainter& painter) const
 
 void Okno::drawLines(QPainter& painter) const
 {
-    if (PointsVectorSize() > 1)
+    if (points.size() > 1)
     {
         QPen line_pen(Qt::green);
         line_pen.setWidth(2);
