@@ -29,7 +29,6 @@ Okno::Okno(QWidget *parent) : QWidget(parent), ui(new Ui::Okno) {
 
 Okno::~Okno() { delete ui; }
 
-// Buttons----------------------------------------
 void Okno::on_clearButton_clicked() {
   clearPoints();
   refreshPointsCountText();
@@ -48,10 +47,9 @@ void Okno::on_generateButton_clicked() {
   }
 }
 
-// Points-----------------------------------------
 void Okno::refreshPointsCountText() { ui->points_count_label->setText(QString::number(points.size(), 10)); }
 
-void Okno::generatePoints() // dodac resizing
+void Okno::generatePoints() // TODO: Add resizing
 {
   while (points.size() < startPointsCount) {
     if (points.size() == 0) {
@@ -76,7 +74,6 @@ void Okno::generatePoints() // dodac resizing
 
 void Okno::clearPoints() { points.clear(); }
 
-// Mouse draw and delete-------------------------------------
 void Okno::mousePressEvent(QMouseEvent *event) {
   QPoint mousePoint{event->pos()};
   bool mouseCollision{false};
@@ -98,7 +95,6 @@ void Okno::mousePressEvent(QMouseEvent *event) {
   refreshPointsCountText();
 }
 
-// Draw-------------------------------------------
 void Okno::paintEvent(QPaintEvent *e) {
   QPainter painter(this);
   drawLines(painter);
