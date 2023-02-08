@@ -31,12 +31,12 @@ private slots:
     void generatePoints();
     void clearPoints();
 
-    size_t PointsVectorSize();
+    size_t PointsVectorSize() const;
 
 protected:
     void paintEvent(QPaintEvent *event);
-    void drawPoints(QPainter *paint);
-    void drawLines(QPainter *paint);
+    void drawPoints(QPainter& painter) const;
+    void drawLines(QPainter& painter) const;
 
     void mousePressEvent(QMouseEvent *event);
 

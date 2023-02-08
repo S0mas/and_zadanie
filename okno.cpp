@@ -80,7 +80,7 @@ void Okno::clearPoints()
     points.clear();
 }
 
-size_t Okno::PointsVectorSize()
+size_t Okno::PointsVectorSize() const
 {
     return points.size();
 }
@@ -111,33 +111,33 @@ void Okno::mousePressEvent(QMouseEvent *event)
 //Draw-------------------------------------------
 void Okno::paintEvent(QPaintEvent *e)
 {
-    QPainter paint(this);
-    drawLines(&paint);
-    drawPoints(&paint);
+    QPainter painter(this);
+    drawLines(painter);
+    drawPoints(painter);
 }
 
-void Okno::drawPoints(QPainter *paint)
+void Okno::drawPoints(QPainter& painter) const
 {
     QPen point_pen(Qt::white);
     point_pen.setWidth(2);
-    paint->setPen(point_pen);
+    painter.setPen(point_pen);
     QBrush brush(Qt::lightGray);
-    paint->setBrush(brush);
+    painter.setBrush(brush);
 
     for_each (points.begin(), points.end(),
-              [&](QPoint point){paint->drawEllipse(point, 8, 8);});
+              [&](QPoint point){painter.drawEllipse(point, 8, 8);});
 }
 
-void Okno::drawLines(QPainter *paint)
+void Okno::drawLines(QPainter& painter) const
 {
     if (PointsVectorSize() > 1)
     {
         QPen line_pen(Qt::green);
         line_pen.setWidth(2);
-        paint->setPen(line_pen);
-        for (std::vector<QPoint>::iterator it = points.begin() ; it != points.end()-1; ++it)
+        painter.setPen(line_pen);
+        for (std::vector<QPoint>::const_iterator it = points.begin() ; it != points.end()-1; ++it)
         {
-            paint->drawLine(*it, *(it+1));
+            painter.drawLine(*it, *(it+1));
         }
     }
 }
