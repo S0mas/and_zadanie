@@ -48,21 +48,6 @@ void Okno::on_generateButton_clicked() {
   update();
 }
 
-void Okno::refreshPointsCountText() { ui->points_count_label->setText(QString::number(points.size(), 10)); }
-
-void Okno::generatePoints() // TODO: Add resizing
-{
-  while (points.size() < startPointsCount) {
-    QPoint candidatePoint{QRandomGenerator::global()->bounded(30, 770), QRandomGenerator::global()->bounded(60, 530)};
-
-    if (auto found = findCollision(candidatePoint, generatorCollisionDistance); found == points.end()) {
-      points.push_back(candidatePoint);
-    }
-  }
-}
-
-void Okno::clearPoints() { points.clear(); }
-
 void Okno::mousePressEvent(QMouseEvent *event) {
   const auto &mouseClickPoint = event->pos();
   if (auto found = findCollision(mouseClickPoint, clickCollisionDistance); found != points.end()) {
@@ -80,6 +65,21 @@ void Okno::paintEvent(QPaintEvent *e) {
   drawPoints(painter);
   refreshPointsCountText();
 }
+
+void Okno::refreshPointsCountText() { ui->points_count_label->setText(QString::number(points.size(), 10)); }
+
+void Okno::generatePoints() // TODO: Add resizing
+{
+  while (points.size() < startPointsCount) {
+    QPoint candidatePoint{QRandomGenerator::global()->bounded(30, 770), QRandomGenerator::global()->bounded(60, 530)};
+
+    if (auto found = findCollision(candidatePoint, generatorCollisionDistance); found == points.end()) {
+      points.push_back(candidatePoint);
+    }
+  }
+}
+
+void Okno::clearPoints() { points.clear(); }
 
 std::vector<QPoint>::const_iterator Okno::findCollision(const QPoint &point1, const int distance) const {
   return std::find_if(points.begin(), points.end(), [point1, distance](auto const &point2) { return checkCollision(point1, point2, distance); });
