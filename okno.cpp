@@ -5,8 +5,8 @@ namespace {
 
 constexpr int pointRadius = 8;
 constexpr int penWidth = 2;
-constexpr int clickCollisionDistance = 160;
-constexpr int generatorCollisionDistance = 300;
+constexpr int clickCollisionDistance = 20;
+constexpr int generatorCollisionDistance = 30;
 constexpr int startPointsCount = 20;
 
 void configurePainterForPoints(QPainter &painter) {
@@ -25,7 +25,7 @@ void configurePainterForLines(QPainter &painter) {
 }
 
 bool checkCollision(const QPoint &point1, const QPoint &point2, const int minimumDistance) {
-  return (pow(point1.x() - point2.x(), 2) < minimumDistance) && (pow(point1.y() - point2.y(), 2) < minimumDistance);
+  return (point1 - point2).manhattanLength() <= minimumDistance;
 }
 
 } // namespace
