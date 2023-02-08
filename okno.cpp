@@ -107,8 +107,10 @@ void Okno::paintEvent(QPaintEvent *e) {
 
 void Okno::drawPoints(QPainter &painter) const {
   configurePainterForPoints(painter);
-
-  for_each(points.begin(), points.end(), [&](QPoint point) { painter.drawEllipse(point, 8, 8); });
+  for(const auto& point : points)
+  {
+    painter.drawEllipse(point, 8, 8);
+  }
 }
 
 void Okno::drawLines(QPainter &painter) const {
