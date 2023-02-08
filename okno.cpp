@@ -75,11 +75,11 @@ void Okno::generatePoints() // TODO: Add resizing
 void Okno::clearPoints() { points.clear(); }
 
 void Okno::mousePressEvent(QMouseEvent *event) {
-  QPoint mousePoint{event->pos()};
-  if (auto found = findCollision(mousePoint, 160); found != points.end()) {
+  const auto &mouseClickPoint = event->pos();
+  if (auto found = findCollision(mouseClickPoint, 160); found != points.end()) {
     points.erase(found);
   } else {
-    points.push_back(mousePoint);
+    points.push_back(mouseClickPoint);
   }
 
   update();
@@ -106,7 +106,7 @@ void Okno::drawPoints(QPainter &painter) const {
 void Okno::drawLines(QPainter &painter) const {
   if (points.size() > 1) {
     configurePainterForLines(painter);
-    for (std::vector<QPoint>::const_iterator it = points.begin(); it != points.end() - 1; ++it) {
+    for (auto it = points.begin(); it != points.end() - 1; ++it) {
       painter.drawLine(*it, *(it + 1));
     }
   }
