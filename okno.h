@@ -6,10 +6,7 @@
 class QMouseEvent;
 class QPaintEvent;
 class QPainter;
-
-QT_BEGIN_NAMESPACE
 namespace Ui { class Okno; }
-QT_END_NAMESPACE
 
 class Okno : public QWidget
 {
