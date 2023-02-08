@@ -1,6 +1,12 @@
 #include "okno.h"
 #include "./ui_okno.h"
 
+#include <QLine>
+#include <QPainter>
+#include <QPen>
+#include <QRandomGenerator>
+#include <QMouseEvent>
+
 namespace {
 
 constexpr int pointRadius = 8;

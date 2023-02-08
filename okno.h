@@ -3,12 +3,10 @@
 
 #include <QWidget>
 #include <QPoint>
-#include <QLine>
-#include <QPainter>
-#include <QPen>
-#include <QRandomGenerator>
-#include <QMouseEvent>
-#include <QDebug>
+
+class QMouseEvent;
+class QPaintEvent;
+class QPainter;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Okno; }
@@ -27,17 +25,17 @@ private slots:
     void on_closeButton_clicked();
     void on_generateButton_clicked();
 
+protected:
+    void mousePressEvent(QMouseEvent *event);
+    void paintEvent(QPaintEvent *event);
+private:
     void refreshPointsCountText();
     void generatePoints();
     void clearPoints();
-
-protected:
-    void paintEvent(QPaintEvent *event);
+private:
     std::vector<QPoint>::const_iterator findCollision(const QPoint& point1, int distance) const;
     void drawPoints(QPainter& painter) const;
     void drawLines(QPainter& painter) const;
-
-    void mousePressEvent(QMouseEvent *event);
 
 private:
     Ui::Okno *ui;
