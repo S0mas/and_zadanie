@@ -39,9 +39,7 @@ InteractivePointsTable::InteractivePointsTable(QWidget *parent) : QWidget{parent
   generateRandomPoints();
 }
 
-std::size_t InteractivePointsTable::pointsCount() const {
-  return points.size();
-}
+std::size_t InteractivePointsTable::pointsCount() const { return points.size(); }
 
 void InteractivePointsTable::clearPoints() {
   points.clear();
