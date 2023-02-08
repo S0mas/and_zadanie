@@ -27,23 +27,23 @@ private slots:
     void on_closeButton_clicked();
     void on_generateButton_clicked();
 
-    void showPointsCount();
-    void setRandomPoints();
+    void refreshPointsCountText();
+    void generatePoints();
     void clearPoints();
 
     size_t PointsVectorSize();
 
 protected:
     void paintEvent(QPaintEvent *event);
-    void drawPointsVector(QPainter *paint);
-    void drawLinePointToPoint(QPainter *paint);
+    void drawPoints(QPainter *paint);
+    void drawLines(QPainter *paint);
 
     void mousePressEvent(QMouseEvent *event);
 
 private:
     Ui::Okno *ui;
     size_t startPointsCount{20};
-    std::vector<QPoint> PointsVector;
+    std::vector<QPoint> points;
     bool vecCleared {false};
 
 };

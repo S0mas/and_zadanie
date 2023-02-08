@@ -6,8 +6,8 @@ Okno::Okno(QWidget *parent)
     , ui(new Ui::Okno)
 {
     ui->setupUi(this);
-    showPointsCount();
-    setRandomPoints();
+    refreshPointsCountText();
+    generatePoints();
     ui->displayFrame->setWindowOpacity(0.2);
 }
 
@@ -20,7 +20,7 @@ Okno::~Okno()
 void Okno::on_clearButton_clicked()
 {
     clearPoints();
-    showPointsCount();
+    refreshPointsCountText();
     vecCleared = true;
     update();
 }
@@ -34,20 +34,20 @@ void Okno::on_generateButton_clicked()
 {
     if(vecCleared || PointsVectorSize() < startPointsCount)
     {
-    setRandomPoints();
-    showPointsCount();
+    generatePoints();
+    refreshPointsCountText();
     vecCleared = false;
     update();
     }
 }
 
 //Points-----------------------------------------
-void Okno::showPointsCount()
+void Okno::refreshPointsCountText()
 {
    ui->points_count_label->setText(QString::number(PointsVectorSize(),10));
 }
 
-void Okno::setRandomPoints() // dodac resizing
+void Okno::generatePoints() // dodac resizing
 {
     while (PointsVectorSize() < startPointsCount)
     {
@@ -55,34 +55,34 @@ void Okno::setRandomPoints() // dodac resizing
         {
             int x = QRandomGenerator::global()->bounded(30,770);
             int y = QRandomGenerator::global()->bounded(50,530);
-            PointsVector.push_back(QPoint(x,y));
+            points.push_back(QPoint(x,y));
         }
         else
         {
             int x = QRandomGenerator::global()->bounded(30,770);
             int y = QRandomGenerator::global()->bounded(60,530);
             bool collision{false};
-            for (auto &p : PointsVector)
+            for (auto &p : points)
             {
                 if ( (pow(p.x()-x, 2) < 300) && (pow(p.y()-y, 2) < 300) )
                 {
                     collision = true;
                 }
             }
-            if (!collision) PointsVector.push_back(QPoint(x,y));
+            if (!collision) points.push_back(QPoint(x,y));
         }
     }
-    showPointsCount();
+    refreshPointsCountText();
 }
 
 void Okno::clearPoints()
 {
-    PointsVector.clear();
+    points.clear();
 }
 
 size_t Okno::PointsVectorSize()
 {
-    return PointsVector.size();
+    return points.size();
 }
 
 //Mouse draw and delete-------------------------------------
@@ -92,7 +92,7 @@ void Okno::mousePressEvent(QMouseEvent *event)
     bool mouseCollision {false};
     std::vector<QPoint>::iterator itToDelete;
 
-    for (std::vector<QPoint>::iterator it = PointsVector.begin() ; it != PointsVector.end(); ++it)
+    for (std::vector<QPoint>::iterator it = points.begin() ; it != points.end(); ++it)
     {
         int distance = 160;
         if ( (pow((*it).x() - mousePoint.x(), 2) < distance) && (pow((*it).y() - mousePoint.y(), 2) < distance) )
@@ -101,22 +101,22 @@ void Okno::mousePressEvent(QMouseEvent *event)
             itToDelete = it;
         }
     }
-    if (!mouseCollision) PointsVector.push_back(mousePoint);
-    else PointsVector.erase(itToDelete);
+    if (!mouseCollision) points.push_back(mousePoint);
+    else points.erase(itToDelete);
 
     update();
-    showPointsCount();
+    refreshPointsCountText();
 }
 
 //Draw-------------------------------------------
 void Okno::paintEvent(QPaintEvent *e)
 {
     QPainter paint(this);
-    drawLinePointToPoint(&paint);
-    drawPointsVector(&paint);
+    drawLines(&paint);
+    drawPoints(&paint);
 }
 
-void Okno::drawPointsVector(QPainter *paint)
+void Okno::drawPoints(QPainter *paint)
 {
     QPen point_pen(Qt::white);
     point_pen.setWidth(2);
@@ -124,18 +124,18 @@ void Okno::drawPointsVector(QPainter *paint)
     QBrush brush(Qt::lightGray);
     paint->setBrush(brush);
 
-    for_each (PointsVector.begin(), PointsVector.end(),
+    for_each (points.begin(), points.end(),
               [&](QPoint point){paint->drawEllipse(point, 8, 8);});
 }
 
-void Okno::drawLinePointToPoint(QPainter *paint)
+void Okno::drawLines(QPainter *paint)
 {
     if (PointsVectorSize() > 1)
     {
         QPen line_pen(Qt::green);
         line_pen.setWidth(2);
         paint->setPen(line_pen);
-        for (std::vector<QPoint>::iterator it = PointsVector.begin() ; it != PointsVector.end()-1; ++it)
+        for (std::vector<QPoint>::iterator it = points.begin() ; it != points.end()-1; ++it)
         {
             paint->drawLine(*it, *(it+1));
         }
