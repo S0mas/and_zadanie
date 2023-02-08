@@ -1,5 +1,4 @@
-#ifndef OKNO_H
-#define OKNO_H
+#pragma once
 
 #include <QWidget>
 #include <QPoint>
@@ -41,7 +40,3 @@ private:
     Ui::Okno *ui;
     std::vector<QPoint> points;
 };
-
-
-
-#endif // OKNO_H
