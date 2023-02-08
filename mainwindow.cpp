@@ -12,10 +12,10 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent), ui(new Ui::MainWindow
 
 MainWindow::~MainWindow() { delete ui; }
 
-void MainWindow::on_clearButton_clicked() { interactivePointsTable->clearPoints(); }
+void MainWindow::on_clearButton_clicked() const { interactivePointsTable->clearPoints(); }
 
-void MainWindow::on_closeButton_clicked() { QApplication::exit(); }
+void MainWindow::on_closeButton_clicked() const { QApplication::exit(); }
 
-void MainWindow::on_generateButton_clicked() { interactivePointsTable->generateRandomPoints(); }
+void MainWindow::on_generateButton_clicked() const { interactivePointsTable->generateRandomPoints(); }
 
-void MainWindow::refreshPointsCountText() { ui->pointsCountLabel->setText(QString::number(interactivePointsTable->pointsCount(), 10)); }
+void MainWindow::refreshPointsCountText() const { ui->pointsCountLabel->setText(QString::number(interactivePointsTable->pointsCount())); }

@@ -15,10 +15,10 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_clearButton_clicked();
-    void on_closeButton_clicked();
-    void on_generateButton_clicked();
-    void refreshPointsCountText();
+    void on_clearButton_clicked() const;
+    void on_closeButton_clicked() const;
+    void on_generateButton_clicked() const;
+    void refreshPointsCountText() const;
 
 private:
     Ui::MainWindow *ui;
